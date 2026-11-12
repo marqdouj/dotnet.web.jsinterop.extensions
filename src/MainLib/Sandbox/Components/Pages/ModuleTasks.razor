@@ -1,0 +1,67 @@
+﻿@page "/moduletasks"
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+@inject ILogger<ModuleTasks> Logger
+@inject INotificationService ToastService
+
+<PageTitle>Module Tasks</PageTitle>
+
+<DemoPage Title="Module Tasks">
+    <SummaryContent>
+        <FluentText As="TextTag.Paragraph">
+            This page demonstrates Module Task Extensions.
+        </FluentText>
+    </SummaryContent>
+    <ChildContent>
+        <Toolbar>
+            <FluentButton Disabled="@notReady" IconStart="@(new Icons.Regular.Size20.ErrorCircle())" Title="Simulate an error being thrown in JavaScript" OnClick="@ThrowError">Throw Error</FluentButton>
+        </Toolbar>
+
+        <FluentText As="TextTag.Paragraph">
+            Click the <code>Throw Error</code> button above to simulate an error being thrown in JavaScript. The error will be caught and logged, and a toast notification will be displayed with the error message.
+            <br />
+            Message:  <code>@errorMessage</code>
+        </FluentText>
+    </ChildContent>
+</DemoPage>
+
+@code {
+    private ExampleJsInterop? jsInterop;
+    private bool notReady => jsInterop == null;
+    private string errorMessage = string.Empty;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsInterop = new ExampleJsInterop(JSRuntime);
+            StateHasChanged();
+        }
+    }
+
+    private async Task ThrowError()
+    {
+        try
+        {
+            await jsInterop!.ThrowError();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+            Logger.LogError(ex, null);
+            await ToastService.ShowError(ex.Message);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (jsInterop != null)
+                await jsInterop.DisposeAsync();
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+}
