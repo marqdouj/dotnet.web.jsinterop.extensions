@@ -1,6 +1,6 @@
 # dotnet.web.jsinterop.extensions
 [![.NET](https://img.shields.io/badge/.NET-blueviolet.svg)](https://github.com/dotnet/aspnetcore)
-[![MIT License](https://img.shields.io/github/license/marqdouj/dotnet.azuremaps?color=%230b0&style=flat-square)](https://github.com/marqdouj/dotnet.web.jsinterop.extensions/blob/master/LICENSE.txt)
+[![MIT License](https://img.shields.io/github/license/marqdouj/dotnet.web.jsinterop.extensions?color=%230b0&style=flat-square)](https://github.com/marqdouj/dotnet.web.jsinterop.extensions/blob/master/LICENSE.txt)
 [![NuGet](https://img.shields.io/badge/nuget-repo-blue?logo=nuget)](https://www.nuget.org/packages/Marqdouj.DotNet.Web.JsInterop.Extensions/)
 
 # Overview
